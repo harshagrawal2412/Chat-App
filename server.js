@@ -29,9 +29,12 @@ const io = require("socket.io")(server, {
   },
 });
 
+const onlineUsers = {};
+
 io.on("connection", (socket) => {
   console.log("Connected to socket.io");
   socket.on("setup", (userData) => {
+    onlineUsers[userData._id] = socket.id;
     socket.join(userData._id);
     socket.emit("connected");
   });
@@ -49,7 +52,11 @@ io.on("connection", (socket) => {
     chat.users.forEach((user) => {
       if (user._id == newMessageRecieved.sender._id) return;
 
-      socket.in(user._id).emit("message recieved", newMessageRecieved);
+      if (onlineUsers[user._id]) {
+        socket
+          .to(onlineUsers[user._id])
+          .emit("message recieved", newMessageRecieved);
+      }
     });
   });
 
