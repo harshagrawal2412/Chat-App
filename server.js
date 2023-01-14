@@ -11,9 +11,9 @@ connect();
 
 app.use(express.json());
 
-app.use("/user", userRoute);
-app.use("/message", messageRoute);
-app.use("/chat", chatRoute);
+app.use("/api/user", userRoute);
+app.use("/api/message", messageRoute);
+app.use("/api/chat", chatRoute);
 
 const PORT = process.env.PORT;
 

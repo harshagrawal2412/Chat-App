@@ -1,6 +1,7 @@
 const express = require("express");
 const { auth } = require("../middleware/auth");
 const User = require("../models/user");
+const generateToken = require("../config/generateToken");
 
 const router = express.Router();
 
