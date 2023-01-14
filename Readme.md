@@ -3,6 +3,7 @@
 
 This is a project on MERN stack using socket.io with realtime chatting feature with 1-1 conversation and group messaging.
 
+![Design](https://user-images.githubusercontent.com/60870496/212465639-df2dd4a2-8ebb-46c4-acec-eb8edf50e198.png)
 
 
 ## Run Locally
