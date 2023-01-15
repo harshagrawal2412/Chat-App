@@ -7,25 +7,25 @@ const axios = require("axios");
 const router = express.Router();
 const onlineUsers = {};
 
-router.get("/online-user", auth, async (req, res) => {
-  try {
-    const { data } = await axios.get("http://localhost:5000/api/user");
-    const onlineUsers = data.filter((user) => onlineUsers[user._id]);
-    res.json(onlineUsers);
-  } catch (error) {
-    res.status(404).json({ msg: "Users not found", error });
-  }
-});
+// router.get("/online-user", auth, async (req, res) => {
+//   try {
+//     const { data } = await axios.get("http://localhost:5000/api/user");
+//     const onlineUsers = data.filter((user) => onlineUsers[user._id]);
+//     res.json(onlineUsers);
+//   } catch (error) {
+//     res.status(404).json({ msg: "Users not found", error });
+//   }
+// });
 
-router.put("/online-user/:id", (req, res) => {
-  onlineUsers[req.params.id] = req.body.username;
-  res.json(onlineUsers);
-});
+// router.put("/online-user/:id", (req, res) => {
+//   onlineUsers[req.params.id] = req.body.username;
+//   res.json(onlineUsers);
+// });
 
-router.delete("/online-user/:id", (req, res) => {
-  delete onlineUsers[req.params.id];
-  res.json(onlineUsers);
-});
+// router.delete("/online-user/:id", (req, res) => {
+//   delete onlineUsers[req.params.id];
+//   res.json(onlineUsers);
+// });
 
 router.get("/", auth, async (req, res) => {
   const keyword = req.query.search
