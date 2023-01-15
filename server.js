@@ -29,14 +29,17 @@ const io = require("socket.io")(server, {
   },
 });
 
-const onlineUsers = {};
+const onlineUsers = [];
 
 io.on("connection", (socket) => {
   console.log("Connected to socket.io");
-  socket.on("setup", (userData) => {
-    onlineUsers[userData._id] = socket.id;
-    socket.join(userData._id);
-    socket.emit("connected");
+  onlineUsers.push(socket.id);
+  socket.emit("onlineUsers", onlineUsers);
+  socket.broadcast.emit("userConnected", socket.id);
+
+  socket.on("disconnect", () => {
+    onlineUsers = onlineUsers.filter((id) => id !== socket.id);
+    socket.broadcast.emit("userDisconnected", socket.id);
   });
 
   socket.on("join chat", (room) => {

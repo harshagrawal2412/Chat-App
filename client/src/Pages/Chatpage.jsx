@@ -13,28 +13,21 @@ const Chatpage = () => {
     <div style={{ width: "100%" }}>
       {user && <SideDrawer />}
       <div
+        // d="flex"
+        // justifyContent="space-evenly"
+        // w={"100%"}
+        // h="91.5vh"
+        // p="10px"
+        // bg="red"
         style={{
           width: "100%",
-          justifyContent: "space-evenly",
           display: "flex",
+          justifyContent: "space-between",
+          background: "white",
         }}
       >
-        <div
-          style={{
-            width: "25%",
-            // justifyContent: "space-evenly",
-            // display: "flex",
-          }}
-        >
-          {user && <MyChats fetchAgain={fetchAgain} />}
-        </div>
-        <div
-          style={{
-            width: "75%",
-            // justifyContent: "space-evenly",
-            // display: "flex",
-          }}
-        >
+        <div>{user && <MyChats fetchAgain={fetchAgain} />}</div>
+        <div>
           {user && (
             <Chatbox fetchAgain={fetchAgain} setFetchAgain={setFetchAgain} />
           )}
