@@ -23,6 +23,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   const [typing, setTyping] = useState(false);
   const [istyping, setIsTyping] = useState(false);
   const [onlineUsers, setOnlineUsers] = useState([]);
+  const [username, setUsername] = useState("");
 
   const toast = useToast();
 
@@ -114,13 +115,21 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     socket.on("onlineUsers", (users) => {
       setOnlineUsers(users);
     });
-    socket.on("userConnected", (userId) => {
-      console.log(`User ${userId} connected`);
+    socket.on("userConnected", (user) => {
+      console.log(`User ${user.username} connected`);
     });
-    socket.on("userDisconnected", (userId) => {
-      console.log(`User ${userId} disconnected`);
+    socket.on("userDisconnected", (user) => {
+      console.log(`User ${user.username} disconnected`);
     });
   }, []);
+  function handleUsername(event) {
+    setUsername(event.target.value);
+  }
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    socket.emit("userConnected", username);
+  }
 
   useEffect(() => {
     fetchMessages();
@@ -254,7 +263,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
       <h1>Online Users</h1>
       <ul>
         {onlineUsers.map((user) => (
-          <li key={user}>{user}</li>
+          <li key={user.id}>{user.username}</li>
         ))}
       </ul>
     </>

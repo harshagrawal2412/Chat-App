@@ -33,12 +33,14 @@ const onlineUsers = [];
 
 io.on("connection", (socket) => {
   console.log("Connected to socket.io");
-  onlineUsers.push(socket.id);
-  socket.emit("onlineUsers", onlineUsers);
-  socket.broadcast.emit("userConnected", socket.id);
+  socket.on("userConnected", (username) => {
+    onlineUsers.push({ username, id: socket.id });
+    io.emit("onlineUsers", onlineUsers);
+    socket.broadcast.emit("userConnected", username);
+  });
 
   socket.on("disconnect", () => {
-    onlineUsers = onlineUsers.filter((id) => id !== socket.id);
+    onlineUsers = onlineUsers.filter((user) => user.id !== socket.id);
     socket.broadcast.emit("userDisconnected", socket.id);
   });
 
